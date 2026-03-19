@@ -15,7 +15,7 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 CORS(app, 
      supports_credentials=True,
-     origins=['http://localhost:5000', 'https://piecebypeas-production.up.railway.app','https://Elaine-Zeng2025.github.io'])
+     origins=['http://localhost:5000', 'https://piecebypeas.onrender.com','https://Elaine-Zeng2025.github.io'])
 
 init_db()
 
