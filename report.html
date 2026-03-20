@@ -1,156 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PieceByPeas - Report</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piece By Peas - Report</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 侧边导航栏 -->
-    <nav class="sidebar">
-        <div class="nav-user">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                <circle cx="12" cy="8" r="4"/>
-                <path d="M4 20v-1a8 8 0 0116 0v1"/>
-            </svg>
-            <span id="userGreeting">Hello</span>
-        </div>
-        
-        <div class="nav-items">
-            <a href="index.html" class="nav-item" aria-label="home">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-            </a>
-            
-            <a href="add.html" class="nav-item" aria-label="add meal">
-                <div class="nav-icon-circle">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="5" x2="12" y2="19"/>
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                    </svg>
-                </div>
-            </a>
-            
-            <a href="report.html" class="nav-item active" aria-label="report">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                    <path d="M9 11H3v2h6v-2zm0-4H3v2h6V7zm0 8H3v2h6v-2zm12-8h-6v2h6V7zm0 4h-6v2h6v-2zm0 4h-6v2h6v-2z"/>
-                </svg>
-            </a>
-        </div>
-        
-        <div class="nav-bottom">
-            <button class="logout-btn" onclick="logout()" aria-label="logout">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
 
-    <!-- 主内容区域 -->
-    <div class="main-content">
-        <div class="container">
-            <div class="page-header">
-                <h2 class="page-title">REPORT</h2>
-                <div class="title-underline"></div>
-            </div>
-            
-            <!-- 今日统计卡片
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-content">
-                        <div class="stat-value" id="totalMealsCount">0</div>
-                        <div class="stat-label">Total Meals</div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-content">
-                        <div class="stat-value" id="foodGroupsCount">0/6</div>
-                        <div class="stat-label">Food Groups</div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">⏰</div>
-                    <div class="stat-content">
-                        <div class="stat-value" id="lastMealTime">--:--</div>
-                        <div class="stat-label">Last Meal</div>
-                    </div>
-                </div>
-            </div> -->
-            
-            <!-- 餐食记录列表 -->
-            <div class="meals-section">
-                <h3 class="section-title">Today's Meals</h3>
-                <div id="mealRecords" class="meal-records">
-                    <div class="empty-state">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
-                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                        </svg>
-                        <p>No meals recorded yet</p>
-                        <button class="btn-primary" onclick="location.href='add.html'">Add your first meal</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 食物类别图例 -->
-            <div class="legend-section">
-                <h3 class="section-title">Food Categories</h3>
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="food-dot grains"></div>
-                        <span>Grains</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="food-dot protein"></div>
-                        <span>Protein</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="food-dot vegetables"></div>
-                        <span>Vegetables</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="food-dot fruits"></div>
-                        <span>Fruits</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="food-dot dairy"></div>
-                        <span>Dairy</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="food-dot snacks"></div>
-                        <span>Snacks</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 营养总结 -->
-            <div class="summary-card">
-                <h3 class="section-title">Nutrition Summary</h3>
-                <div id="reportText" class="summary-text">
-                    Start tracking your meals to see your nutrition summary
-                </div>
-                <div id="nutritionAdvice" class="nutrition-advice"></div>
-            </div>
-            
-            <!-- 操作按钮 -->
-            <div class="report-actions">
-                <button class="btn-secondary" onclick="location.href='index.html'">
-                    Back to Home
-                </button>
-                <button class="btn-primary" onclick="location.href='add.html'">
-                    Add Another Meal
-                </button>
-            </div>
-        </div>
+<nav class="sidebar">
+  <div class="nav-user" id="navUser" onclick="toggleDropdown()">
+    <svg width="28" height="28" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20v-1a8 8 0 0116 0v1"/></svg>
+    <span class="nav-user-name" id="userGreeting">Hello</span>
+    <div class="user-dropdown" id="userDropdown">
+      <div class="dropdown-email" id="dropdownEmail">—</div>
+      <button class="dropdown-item" onclick="openProfile()">Edit information</button>
+      <button class="dropdown-item" onclick="toggleLanguage()">Language (English)</button>
+      <button class="dropdown-item logout" onclick="logout()">Log Out</button>
     </div>
-    
-    <script src="script.js"></script>
+  </div>
+  <div class="nav-items">
+    <a href="index.html" class="nav-item" aria-label="Home">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    </a>
+    <a href="add.html" class="nav-item" aria-label="Add meal">
+      <div class="nav-icon-circle">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+    </a>
+    <a href="log.html" class="nav-item" aria-label="Log">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H3v2h6v-2zm0-4H3v2h6V7zm0 8H3v2h6v-2zm12-8h-6v2h6V7zm0 4h-6v2h6v-2zm0 4h-6v2h6v-2z"/></svg>
+    </a>
+    <a href="report.html" class="nav-item active" aria-label="Report">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="11" y2="16"/></svg>
+    </a>
+  </div>
+</nav>
+
+<div class="modal-overlay" id="profileModal">
+  <div class="modal-card">
+    <p class="modal-title">Edit information</p>
+    <div class="modal-field"><label>Name</label><input type="text" id="profileName"></div>
+    <div class="modal-field"><label>Email</label><input type="email" id="profileEmail"></div>
+    <div class="modal-field"><label>New password</label><input type="password" id="profilePassword" placeholder="Leave blank to keep current"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeProfile()">Cancel</button>
+      <button class="btn-primary" onclick="saveProfile()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="page-wrap">
+    <img src="Bea.png" alt="Bea" class="page-bea">
+    <div class="page-logo">PIECE BY PEAS</div>
+
+    <div class="report-wrap">
+      <!-- Period selector -->
+      <div class="period-tabs">
+        <button class="period-tab" id="tabMonth" onclick="setPeriod('month')">This Month</button>
+        <button class="period-tab active" id="tabWeek" onclick="setPeriod('week')">This Week</button>
+        <button class="period-tab" id="tabCustom" onclick="setPeriod('custom')">Last 7 Days</button>
+      </div>
+      <div class="period-range" id="periodRange"></div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Days covered this week</div>
+          <div class="stat-value" id="statDays">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Average meals per day</div>
+          <div class="stat-value" id="statAvg">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Most commonly consumed</div>
+          <div class="stat-value" id="statTop">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Most commonly missing</div>
+          <div class="stat-value warning" id="statMissing">—</div>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#f0945d"></div>Grains</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#EF82A0"></div>Protein</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#6bb392"></div>Vegetables</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ffd970"></div>Fruits</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#88abda"></div>Dairy</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#dcc7e1"></div>Snacks</div>
+      </div>
+
+      <!-- Charts -->
+      <div class="chart-block">
+        <div class="chart-title" id="barTitle">Daily food group coverage</div>
+        <div style="position:relative;width:100%;height:200px">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-title">Nutrition coverage radar</div>
+        <div style="position:relative;width:100%;height:220px">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-title">Meal type distribution</div>
+        <div style="position:relative;width:100%;height:180px">
+          <canvas id="donutChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
