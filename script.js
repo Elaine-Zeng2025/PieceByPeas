@@ -22,60 +22,6 @@ async function checkAuth() {
   }
 }
 
-async function logout() {
-  if (!confirm('Are you sure you want to log out?')) return;
-  await apiFetch('/auth/logout', { method: 'POST' });
-  localStorage.removeItem('username');
-  localStorage.removeItem('userEmail');
-  window.location.href = 'login.html';
-}
-
-function updateGreeting() {
-  const username = localStorage.getItem('username') || 'Hello';
-  document.querySelectorAll('#userGreeting').forEach(el => el.textContent = `Hello, ${username}`);
-  const emailEl = document.getElementById('dropdownEmail');
-  if (emailEl) emailEl.textContent = localStorage.getItem('userEmail') || '—';
-}
-
-function toggleDropdown() {
-  document.getElementById('userDropdown')?.classList.toggle('open');
-}
-
-document.addEventListener('click', function(e) {
-  const navUser = document.getElementById('navUser');
-  const dd = document.getElementById('userDropdown');
-  if (dd && navUser && !navUser.contains(e.target)) dd.classList.remove('open');
-});
-
-function openProfile() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  const nameEl = document.getElementById('profileName');
-  const emailEl = document.getElementById('profileEmail');
-  if (nameEl) nameEl.value = localStorage.getItem('username') || '';
-  if (emailEl) emailEl.value = localStorage.getItem('userEmail') || '';
-  const pwEl = document.getElementById('profilePassword');
-  if (pwEl) pwEl.value = '';
-  document.getElementById('profileModal')?.classList.add('open');
-}
-
-function closeProfile() {
-  document.getElementById('profileModal')?.classList.remove('open');
-}
-
-async function saveProfile() {
-  const name = document.getElementById('profileName')?.value.trim();
-  const email = document.getElementById('profileEmail')?.value.trim();
-  if (name) localStorage.setItem('username', name);
-  if (email) localStorage.setItem('userEmail', email);
-  updateGreeting();
-  closeProfile();
-  showNotification('Profile updated', 'success');
-}
-
-function toggleLanguage() {
-  showNotification('Language switching coming soon', 'info');
-}
-
 // ── TAG SELECT ──
 function initTagSelect() {
   document.querySelectorAll('.tag-option').forEach(btn => {
@@ -107,11 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if (path.includes('login.html') || (path.endsWith('login') )) { initLoginPage(); return; }
   if (path.includes('register')) { initRegisterPage(); return; }
   checkAuth().then(() => {
-    updateGreeting();
+    NavBar.updateGreeting();
     if (path.includes('add'))    initAddPage();
     if (path.includes('log'))    initLogPage();
     if (path.includes('report')) initReportPage();
-    if (path.includes('index') || path.endsWith('/') || path.endsWith('5000/')) initHomePage();
+    if (path.includes('index') || path === '/' || path.endsWith('/')) initHomePage();
   });
 });
 
@@ -308,7 +254,10 @@ function switchTab(tab) {
 function getMealsForDate(offset) {
   const d = new Date();
   d.setDate(d.getDate() + offset);
-  const dateStr = d.toISOString().split('T')[0]; // "YYYY-MM-DD"
+  const year  = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day   = String(d.getDate()).padStart(2, '0');
+  const dateStr = `${year}-${month}-${day}`;
   return allMeals.filter(m => getDateStr(m.created_at) === dateStr);
 }
 

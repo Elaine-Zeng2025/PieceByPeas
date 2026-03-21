@@ -307,7 +307,10 @@ body {
   text-decoration: none;
 }
 
-.nav-item svg { fill: rgba(255,255,255,0.75); }
+.nav-item svg {
+  fill: none;
+  stroke: rgba(255,255,255,0.75);
+}
 
 .nav-item:hover { background: rgba(255,255,255,0.1); }
 
@@ -315,12 +318,15 @@ body {
   background: var(--green-light);
 }
 
-.nav-item.active svg { fill: var(--green-dark); }
+.nav-item.active svg { stroke: var(--green-dark); }
 
 .nav-icon-circle {
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
 }
+
+.nav-item .report-dot { fill: rgba(255,255,255,0.75); }
+.nav-item.active .report-dot { fill: var(--green-dark); }
 
 .nav-item.active .nav-icon-circle svg { stroke: var(--green-dark); }
 .nav-item .nav-icon-circle svg { stroke: rgba(255,255,255,0.75); }
