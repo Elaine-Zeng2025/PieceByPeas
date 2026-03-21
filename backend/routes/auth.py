@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, session
 from database import get_db, DATABASE_URL
 import hashlib
 import re
-from database import get_db
+
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -98,12 +98,63 @@ def me():
         return jsonify({'error': 'Not logged in'}), 401
     return jsonify({'user_id': session['user_id'], 'username': session['username']})
 
-# ── 暂时用于查看已有用户 ───────────────────────────────
-@auth_bp.route('/admin/users', methods=['GET'])
-def admin_users():
+# ── 更新个人资料 ───────────────────────────────────
+@auth_bp.route('/profile', methods=['PUT'])
+def update_profile():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+ 
+    data = request.get_json()
+    username = data.get('username', '').strip()
+    email    = data.get('email', '').strip()
+    password = data.get('password', '')
+ 
+    if not username or not email:
+        return jsonify({'error': 'Username and email cannot be empty'}), 400
+    if not is_valid_email(email):
+        return jsonify({'error': 'Invalid email format'}), 400
+ 
     conn = get_db()
-    users = conn.execute(
-        'SELECT id, username, email, created_at FROM users'
-    ).fetchall()
-    conn.close()
-    return jsonify([dict(u) for u in users])
+    try:
+        if password:
+            # 更新包含密码
+            if DATABASE_URL:
+                cursor = conn.cursor()
+                cursor.execute(
+                    'UPDATE users SET username=%s, email=%s, password=%s WHERE id=%s',
+                    (username, email, hash_password(password), session['user_id'])
+                )
+                cursor.close()
+            else:
+                conn.execute(
+                    'UPDATE users SET username=?, email=?, password=? WHERE id=?',
+                    (username, email, hash_password(password), session['user_id'])
+                )
+        else:
+            # 不更新密码
+            if DATABASE_URL:
+                cursor = conn.cursor()
+                cursor.execute(
+                    'UPDATE users SET username=%s, email=%s WHERE id=%s',
+                    (username, email, session['user_id'])
+                )
+                cursor.close()
+            else:
+                conn.execute(
+                    'UPDATE users SET username=?, email=? WHERE id=?',
+                    (username, email, session['user_id'])
+                )
+        conn.commit()
+ 
+        # 更新 session
+        session['username'] = username
+ 
+        return jsonify({
+            'message': 'Profile updated',
+            'user': {'username': username, 'email': email}
+        })
+    except Exception as e:
+        print(f"Profile update error: {e}")
+        return jsonify({'error': 'Username or email already in use'}), 409
+    finally:
+        conn.close()
