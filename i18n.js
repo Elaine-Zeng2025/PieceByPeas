@@ -16,7 +16,7 @@ const TRANSLATIONS = {
     login_title: 'Log in',
     signup_title: 'Sign up',
     back_to_login: 'Back to Log in',
-    username_ph: 'User name / Email',
+    username_ph: 'Email',
     password_ph: 'Password',
     account_created: 'Account created! Please log in.',
     // index
@@ -88,7 +88,7 @@ const TRANSLATIONS = {
     login_title: '登录',
     signup_title: '注册',
     back_to_login: '返回登录',
-    username_ph: '用户名 / 邮箱',
+    username_ph: '邮箱',
     password_ph: '密码',
     account_created: '注册成功！请登录。',
     // index
